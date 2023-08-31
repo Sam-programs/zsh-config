@@ -1,0 +1,3 @@
+[[ $(tty) = "/dev/tty1" ]] && exec startx &> ~/xorg-log 
+
+source /usr/share/zsh/myfuncs/load_dir.zsh
