@@ -1,3 +1,6 @@
+git clone https://github.com/Sam-programs/zsh-calc &&
+sudo ./zsh-calc/install.sh 
+
 sudo pacman -S gzip unzip tar bzip2 unrar pulseaudio\
 	  github-cli git\
      exa neovim gdb\
@@ -12,7 +15,8 @@ cp .zshrc ~/.config/zsh/.zshrc -f
 cp .zshalias ~/.config/zsh/.zshalias -f
 cp .zshgit  ~/.config/zsh/.zshgit -f
 cp .zshutils ~/.config/zsh/.zshutils -f
-cp empty ~/.config/zsh/.zshconfig -f
+touch ~/.config/zsh/.zshconfig 
 
 mv  ~/.zshrc ~/.zshrc.bak
 ln -sf ~/.config/zsh/.zshrc ~/.zshrc -f
+

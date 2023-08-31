@@ -24,3 +24,4 @@ typeset -A ZSH_HIGHLIGHT_REGEXP
 ZSH_HIGHLIGHT_REGEXP+=('[0-9]' fg=cyan)
 ZSH_HIGHLIGHT_HIGHLIGHTERS+=(main regexp)
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-calc/zsh-calc.zsh

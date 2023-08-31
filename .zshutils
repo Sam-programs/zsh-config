@@ -1,5 +1,5 @@
 #deps command
-#sudo pacman -S gzip unzip tar bzip2 unrar pulseaudio --needed
+#sudo pacman -S gzip unzip tar bzip2 unrar pulseaudio nvim --needed
 function ex ()
 {
 	if [ -f $1 ] ; then
@@ -40,13 +40,14 @@ function leastUsedCmd(){
 	history 1 |
 	awk '{CMD[$2]++;count++;}END { for (a in CMD) print CMD[a] " " int(CMD[a]/count*100) "% " a;}' | 
 	column -c3 -s " " -t | 
-	sort -nr | 
+	sort -n | 
 	tail -n"$1" |
 	nl
 }
 
 function rasm(){
-	objdump -d --no-show-raw-insn --disassembler-color=on --visualize-jumps -Mintel $@ | less -r
+	#masm seems to work best with objdump's output
+	objdump -d --no-show-raw-insn --visualize-jumps -Mintel $@ | nvim "+set ft=masm"
 }
 
 function vol(){
