@@ -1,4 +1,4 @@
-source ~/.config/zsh/.zshconfig
+source ~/.config/zsh/.zshbegin
 source ~/.config/zsh/.zshalias
 source ~/.config/zsh/.zshgit
 source ~/.config/zsh/.zshutils
