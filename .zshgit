@@ -1,0 +1,57 @@
+#deps command
+#sudo pacman -S github-cli git --needed
+GITUSER="Sam-Programs"
+
+function mkgh ()
+{
+  gh repo create $1 --private
+}
+
+function mkpublic ()
+{
+	gh repo edit --visibility public	
+}
+
+function mkprivate()
+{
+  gh repo edit --visibility private
+}
+
+
+function mkgit(){
+
+git init
+git add .
+
+git status
+local answer
+read "answer?Commit ? (y/n) " 
+[[ "$answer" =~ "[Yy]" ]] || return 
+git commit -m "initial commit"
+
+read "answer?Create on Github ? (y/n) " 
+! [[ "$answer" =~ "[Yy]" ]] && return
+read "name?Repo Name ? " 
+[[ -z "$name" ]] && return
+[[ "$answer" =~ "[Yy]" ]] && mkgh "$name" 
+
+git remote add origin "https://github.com/$GITUSER/$name.git"
+git branch -m main
+git push -u origin main 
+
+
+}
+
+function cmt(){
+
+git restore --staged .
+git add .
+git status
+local answer
+read "answer?Commit ? (y/n) " 
+[[ "$answer" =~ "[Yy]" ]] || return
+read "answer?Message ? " 
+git commit -m "$answer"
+
+}
+

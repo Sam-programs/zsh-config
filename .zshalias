@@ -1,0 +1,23 @@
+#deps command
+#sudo pacman -S exa nvim gdb
+alias ls='exa --icons --group-directories-first'
+alias l='ls'
+alias ll='ls -l'
+alias lla='ll -a'
+alias la='ls -a'
+
+
+alias gdb='gdb -q'
+
+alias less='less -r'
+
+export EDITOR='nvim'
+
+export MANPAGER="nvim +Man!"
+
+export XDG_CONFIG_HOME="$HOME/.config/"
+export XDG_CACHE_HOME="$HOME/.cache/"
+export XDG_DATA_HOME="$HOME/.local/share/"
+
+export WGETRC="$HOME/.config/wget/wgetrc"
+export GNUPGGHOME="$XDG_DATA_HOME/gunpg/"

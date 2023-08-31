@@ -1,0 +1,83 @@
+#deps command
+#sudo pacman -S gzip unzip tar bzip2 unrar pulseaudio --needed
+function ex ()
+{
+	if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2)   tar xjf $1   ;;
+			*.tar.gz)    tar xzf $1   ;;
+			*.tar.xz)    tar xJf $1   ;;
+			*.bz2)       bunzip2 $1   ;;
+			*.rar)       unrar x $1     ;;
+			*.gz)        gunzip $1    ;;
+			*.tar)       tar xf $1    ;;
+			*.tbz2)      tar xjf $1   ;;
+			*.tgz)       tar xzf $1   ;;
+			*.zip)       unzip $1     ;;
+			*.Z)         uncompress $1;;
+			*.7z)        7z x $1      ;;
+			*)           echo "'$1' cannot be extracted via ex()" ;;
+		esac
+	else
+		echo "$0: '$1' : No such file or directory"
+	fi
+}
+
+function installfile(){
+   pacman -Fq $1 | sudo pacman -S -
+}
+
+function mostUsedCmd(){
+	history 1 |
+	awk '{CMD[$2]++;count++;}END { for (a in CMD) print CMD[a] " " int(CMD[a]/count*100) "% " a;}' | 
+	column -c3 -s " " -t | 
+	sort -nr | 
+	nl |  
+	head -n"$1"
+}
+
+function leastUsedCmd(){
+	history 1 |
+	awk '{CMD[$2]++;count++;}END { for (a in CMD) print CMD[a] " " int(CMD[a]/count*100) "% " a;}' | 
+	column -c3 -s " " -t | 
+	sort -nr | 
+	tail -n"$1" |
+	nl
+}
+
+function rasm(){
+	objdump -d --no-show-raw-insn --disassembler-color=on --visualize-jumps -Mintel $@ | less -r
+}
+
+function vol(){
+ if [[ $# = 0 ]]; then
+ pactl -- get-sink-volume 0
+ fi 
+ pactl -- set-sink-volume 0 "$1%"
+}
+
+#to lazy to type project
+function pro(){
+   [[ -z $1 ]] && return
+   mkdir -p $1/src
+   cd $1
+   cp ~/.config/pro/test.c .
+   cp ~/.config/pro/test.h . 
+   cp ~/.config/pro/Makefile .
+   cp ~/.config/pro/src/* ./src/
+}
+
+#haha l vscode users
+function code()   {
+   if [[ $# = 0 ]] ; then
+   cd ~/code/ &> /dev/null || 
+   mkdir ~/code/ && 
+   cd  ~/code/ 
+   return
+   fi
+   cd ~/code/$1 &> /dev/null || pro ~/code/$1 && cd  ~/code/$1
+   [ -f src/main.cpp ] && nvim src/main.cpp && return
+   [ -f src/main.c   ] && nvim src/main.c && return
+}
+
+
