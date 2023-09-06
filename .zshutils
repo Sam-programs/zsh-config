@@ -65,7 +65,9 @@ function pro(){
    cp ~/.config/pro/test.c .
    cp ~/.config/pro/test.h . 
    cp ~/.config/pro/Makefile .
+   cp ~/.config/pro/.gitignore .
    cp ~/.config/pro/src/* ./src/
+   cp ~/.clang-format src/
 }
 
 #haha l vscode users
