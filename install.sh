@@ -15,7 +15,7 @@ cp .zshrc ~/.config/zsh/.zshrc -f
 cp .zshalias ~/.config/zsh/.zshalias -f
 cp .zshgit  ~/.config/zsh/.zshgit -f
 cp .zshutils ~/.config/zsh/.zshutils -f
-touch ~/.config/zsh/.zshconfig 
+touch ~/.config/zsh/.zshbegin
 
 mv  ~/.zshrc ~/.zshrc.bak
 ln -sf ~/.config/zsh/.zshrc ~/.zshrc -f
