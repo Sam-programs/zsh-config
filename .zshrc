@@ -32,8 +32,8 @@ function precmd()
  [[ $err != 0 ]] &&  echo "$bg[red]$fg[black]  $err $fg[red]$bg[black]"
  local took="$((SECONDS - exectime))"
  [[ -z $timelock ]] && [[ $took > 1 ]] && 
-    echo "$bg[yellow]$fg[black] "$(date -d@$took -u "+%H:%M:%Shrs")" $bg[black]$fg[yellow]" &&
-    timelock="1"
+    echo "$bg[yellow]$fg[black] "$(date -d@$took -u "+%H:%M:%Shrs")" $bg[black]$fg[yellow]" 
+  timelock="1"
 }
 
 TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
