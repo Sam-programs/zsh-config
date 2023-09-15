@@ -11,10 +11,10 @@ autoload -U colors && colors
 function update_prompt(){
   local gitbranch="$(git branch --show-current 2> /dev/null)"
   [[ -z $gitbranch ]] &&  PS1="%{$fg[black]$bg[blue]%} %~ %{$reset_color$fg[blue]%}
-%{$fg[black]$bg[green]%}  %{$bg[black]$fg[green]%} %{$reset_color%}" && return
+%{$fg[black]$bg[green]%}  %{$bg[black]$fg[green]%}%{$reset_color%} " && return
   local icon=" $gitbranch"
   PS1="%{$fg[black]$bg[blue]%} %~%{$reset_color$fg[blue]%}
-%{$fg[black]$bg[green]%} $icon %{$reset_color$fg[green]%} %{$reset_color%}"
+%{$fg[black]$bg[green]%} $icon %{$reset_color$fg[green]%}%{$reset_color%} "
 }
 update_prompt
 
@@ -33,7 +33,7 @@ function precmd()
  local took="$((SECONDS - exectime))"
  [[ -z $timelock ]] && [[ $took > 1 ]] && 
     echo "$bg[yellow]$fg[black] "$(date -d@$took -u "+%H:%M:%Shrs")" $bg[black]$fg[yellow]" 
-  timelock="1"
+     timelock="1"
 }
 
 TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
@@ -42,7 +42,9 @@ function command_not_found_handler(){
    echo "$1 command not found"
 }
 
-zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
+zshaddhistory() { 
+   whence ${${(z)1}[1]} >| /dev/null || return 1 
+}
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^I'   autosuggest-accept # tab          | autosuggest
 bindkey '^[[Z' complete-word      # shift + tab  | complete

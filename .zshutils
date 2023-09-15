@@ -53,6 +53,7 @@ function rasm(){
 function vol(){
  if [[ $# = 0 ]]; then
  pactl -- get-sink-volume 0
+ return
  fi 
  pactl -- set-sink-volume 0 "$1%"
 }
@@ -73,14 +74,15 @@ function pro(){
 #haha l vscode users
 function code()   {
    if [[ $# = 0 ]] ; then
+     
    cd ~/code/ &> /dev/null || 
    mkdir ~/code/ && 
-   cd  ~/code/ 
+   cd  ~/code/  
    return
    fi
-   cd ~/code/$1 &> /dev/null || pro ~/code/$1 && cd  ~/code/$1
    [ -f src/main.cpp ] && nvim src/main.cpp && return
    [ -f src/main.c   ] && nvim src/main.c && return
+   cd ~/code/$1 &> /dev/null || pro ~/code/$1 && cd  ~/code/$1
 }
 
 

@@ -1,5 +1,5 @@
 #deps command
-#sudo pacman -S exa nvim gdb
+#sudo pacman -S eza nvim gdb
 alias ls='exa --icons --group-directories-first'
 alias l='ls'
 alias ll='ls -l'
