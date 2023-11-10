@@ -1,5 +1,4 @@
-#deps command
-#sudo pacman -S gzip unzip tar bzip2 unrar pulseaudio nvim --needed
+#sudo pacman -S gzip unzip tar bzip2 unrar --needed
 function ex ()
 {
 	if [ -f $1 ] ; then
@@ -28,34 +27,43 @@ function installfile(){
 }
 
 function mostUsedCmd(){
+   local count=$1
+   [[ -z $1 ]]  && 
+      count="10"
 	history 1 |
 	awk '{CMD[$2]++;count++;}END { for (a in CMD) print CMD[a] " " int(CMD[a]/count*100) "% " a;}' | 
 	column -c3 -s " " -t | 
 	sort -nr | 
 	nl |  
-	head -n"$1"
+	head -n"$count"
 }
 
 function leastUsedCmd(){
+   local count=$1
+   [[ -z $1 ]]  && 
+      count="10"
 	history 1 |
 	awk '{CMD[$2]++;count++;}END { for (a in CMD) print CMD[a] " " int(CMD[a]/count*100) "% " a;}' | 
 	column -c3 -s " " -t | 
 	sort -n | 
-	tail -n"$1" |
+	tail -n"$count" |
 	nl
 }
 
+#sudo pacman -S neovim --needed
 function rasm(){
-	#masm seems to work best with objdump's output
-	objdump -d --no-show-raw-insn --visualize-jumps -Mintel $@ | nvim "+set ft=masm"
+	objdump -dS --no-show-raw-insn --visualize-jumps --no-addresses -Mintel $@ | 
+      #masm seems to work best with objdump's output
+      nvim "+set ft=masm"
 }
 
+#sudo pacman -S pulseaudio --needed
 function vol(){
- if [[ $# = 0 ]]; then
- pactl -- get-sink-volume 0
- return
- fi 
- pactl -- set-sink-volume 0 "$1%"
+   if [[ $# = 0 ]]; then
+      pactl -- get-sink-volume 0
+      return
+   fi 
+   pactl -- set-sink-volume 0 "$1%"
 }
 
 #to lazy to type project
@@ -74,15 +82,20 @@ function pro(){
 #haha l vscode users
 function code()   {
    if [[ $# = 0 ]] ; then
-     
    cd ~/code/ &> /dev/null || 
    mkdir ~/code/ && 
    cd  ~/code/  
    return
    fi
-   [ -f src/main.cpp ] && nvim src/main.cpp && return
-   [ -f src/main.c   ] && nvim src/main.c && return
    cd ~/code/$1 &> /dev/null || pro ~/code/$1 && cd  ~/code/$1
 }
 
+function mkasm(){
+   clang $@ -S
+}
 
+function make(){
+   [[ $1 = "bear" ]] && 
+   /usr/bin/bear -- /usr/bin/make clean all && return 
+   /usr/bin/make $@
+}

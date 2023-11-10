@@ -1,18 +1,17 @@
-#deps command
-#sudo pacman -S eza nvim gdb
+#sudo pacman -S eza --needed
 alias ls='exa --icons --group-directories-first'
 alias l='ls'
 alias ll='ls -l'
 alias lla='ll -a'
 alias la='ls -a'
 
-
+#sudo pacman -S gdb --needed
 alias gdb='gdb -q'
 
 alias less='less -r'
 
+#sudo pacman -S neovim --needed
 export EDITOR='nvim'
-
 export MANPAGER="nvim +Man!"
 
 export XDG_CONFIG_HOME="$HOME/.config/"

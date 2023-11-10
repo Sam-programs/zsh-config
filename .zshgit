@@ -1,57 +1,51 @@
-#deps command
 #sudo pacman -S github-cli git --needed
 GITUSER="Sam-Programs"
 
-function mkgh ()
-{
-  gh repo create $1 --private
+function mkgh (){
+   cp ~/LICENSE .
+   git add LICENSE
+   git commit -m "LICENSE"
+   gh repo create $1 --private
+
+   git remote add origin "https://github.com/$GITUSER/$1.git" ||
+   git remote set-url origin "https://github.com/$GITUSER/$1.git"
+
+   git branch -m main
+   git push
 }
 
-function mkpublic ()
-{
-	gh repo edit --visibility public	
+# you know this extra space was a mistake but i kinda like it now
+function mkpublic (){
+   gh repo edit --visibility public	
 }
 
-function mkprivate()
-{
-  gh repo edit --visibility private
+function mkprivate(){
+   gh repo edit --visibility private
 }
-
 
 function mkgit(){
+   git init
 
-git init
-git add .
+   cmt
+   [[ $? == 1 ]] && return 1
 
-git status
-local answer
-read "answer?Commit ? (y/n) " 
-[[ "$answer" =~ "[Yy]" ]] || return 
-git commit -m "initial commit"
+   read "answer?Create on Github ? (y/n) " 
+   ! [[ "$answer" =~ "[Yy]" ]] && return 1
+   read "name?Repo Name ? "
+   [[ -z "$name" ]] && return 1
 
-read "answer?Create on Github ? (y/n) " 
-! [[ "$answer" =~ "[Yy]" ]] && return
-read "name?Repo Name ? " 
-[[ -z "$name" ]] && return
-[[ "$answer" =~ "[Yy]" ]] && mkgh "$name" 
-
-git remote add origin "https://github.com/$GITUSER/$name.git"
-git branch -m main
-git push -u origin main 
-
-
+   mkgh "$name" 
 }
 
 function cmt(){
+   git rm --cached . -r &> /dev/null
+   git add -A
+   git status
 
-git restore --staged .
-git add .
-git status
-local answer
-read "answer?Commit ? (y/n) " 
-[[ "$answer" =~ "[Yy]" ]] || return
-read "answer?Message ? " 
-git commit -m "$answer"
+   local answer
+   read "answer?Commit ? (y/n) " 
+   [[ "$answer" =~ "[Yy]" ]] || return 1
 
+   read "answer?Message ? " 
+   git commit -m "$answer"
 }
-
