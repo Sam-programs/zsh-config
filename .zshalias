@@ -9,10 +9,15 @@ alias la='ls -a'
 alias gdb='gdb -q'
 
 alias less='less -r'
+alias e='nvim'
 
 #sudo pacman -S neovim --needed
 export EDITOR='nvim'
 export MANPAGER="nvim +Man!"
+export BAT_STYLE='grid'
+
+export CC='clang'
+export CXX='clang++'
 
 export XDG_CONFIG_HOME="$HOME/.config/"
 export XDG_CACHE_HOME="$HOME/.cache/"

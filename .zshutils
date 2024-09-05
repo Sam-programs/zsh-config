@@ -71,12 +71,12 @@ function pro(){
    [[ -z $1 ]] && return
    mkdir -p $1/src
    cd $1
-   cp ~/.config/pro/test.c .
-   cp ~/.config/pro/test.h . 
-   cp ~/.config/pro/Makefile .
+   cp ~/.config/pro/CMakeLists.txt .
    cp ~/.config/pro/.gitignore .
    cp ~/.config/pro/src/* ./src/
-   cp ~/.clang-format src/
+   cp ~/.clang-format .
+   ln -sf build/compile_commands.json compile_commands.json
+   cp ~/LICENSE .
 }
 
 #haha l vscode users
@@ -90,11 +90,35 @@ function code()   {
    cd ~/code/$1 &> /dev/null || pro ~/code/$1 && cd  ~/code/$1
 }
 
+function codec()   {
+   if [[ $# = 0 ]] ; then
+   cd ~/codec/ &> /dev/null || 
+   mkdir ~/codec/ && 
+   cd  ~/codec/  
+   return
+   fi
+   cd ~/codec/$1 &> /dev/null || pro ~/codec/$1 && cd  ~/codec/$1
+}
+
+function codew()   {
+   if [[ $# = 0 ]] ; then
+   cd ~/codew/ &> /dev/null || 
+   mkdir ~/codew/ && 
+   cd  ~/codew/  
+   return
+   fi
+   cd ~/codew/$1 &> /dev/null || mkdir ~/codew/$1 && cd  ~/codew/$1
+}
+
+
+
 function mkasm(){
    clang $@ -S
 }
 
 function make(){
+   [[ -f "src/CMakeLists.txt" ]] && /usr/bin/make $@ && 
+   [[ -f main ]] && ./main  && return
    [[ $1 = "bear" ]] && 
    /usr/bin/bear -- /usr/bin/make clean all && return 
    /usr/bin/make $@

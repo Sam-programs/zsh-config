@@ -1,3 +1,4 @@
+#!/usr/bin/sh
 git clone https://github.com/Sam-programs/zsh-calc &&
 sudo ./zsh-calc/install.sh 
 

@@ -10,7 +10,7 @@ function mkgh (){
    git remote add origin "https://github.com/$GITUSER/$1.git" ||
    git remote set-url origin "https://github.com/$GITUSER/$1.git"
 
-   git branch -m main
+   git branch -m master
    git push
 }
 
@@ -38,8 +38,7 @@ function mkgit(){
 }
 
 function cmt(){
-   git rm --cached . -r &> /dev/null
-   git add -A
+   [[ $PWD =~ 'neovim' ]] && make format && git restore --staged .clang-tidy debug.sh
    git status
 
    local answer
