@@ -26,7 +26,7 @@ Preset_color="%{$reset_color%}"
 function update_prompt(){
   local gitbranch="$(git branch --show-current 2> /dev/null)"
   local icon=" $gitbranch "
-  local dir=$(luajit ~/format_pwd.lua $PWD) 
+  local dir=$(luajit ~/.config/zsh/format_pwd.lua $PWD) 
   if [[ -z $gitbranch ]];then
      PS1="$fg_black$bg_blue $dir $Preset_color$fg_blue
 $fg_black$bg_green  $Preset_color$fg_green$Preset_color "
@@ -131,5 +131,6 @@ alias godot="~/.local/bin/godot"
 function mp4(){
     ffmpeg -i $1.mkv $1.mp4
 }
-[[ $((RANDOM % 10)) == 0 ]] && ~/.fehbg
+[[ $((RANDOM % 10)) == 0 ]] && ~/.fehbg 
 return 0
+
