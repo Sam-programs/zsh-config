@@ -1,6 +1,7 @@
 #!/usr/bin/sh
-git clone https://github.com/Sam-programs/zsh-calc &&
-sudo ./zsh-calc/install.sh 
+
+git clone https://github.com/Sam-programs/zsh-calc
+sudo ./zsh-calc/install.sh
 
 sudo pacman -S gzip unzip tar bzip2 unrar pulseaudio\
 	  github-cli git\

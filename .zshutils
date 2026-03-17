@@ -68,9 +68,9 @@ function vol(){
 
 #to lazy to type project
 function pro(){
-   [[ -z $1 ]] && return
-   mkdir -p $1/src
-   cd $1
+   [[ -z "$1" ]] && return
+   mkdir -p "$1/src"
+   cd "$1"
    cp ~/.config/pro/CMakeLists.txt .
    cp ~/.config/pro/.gitignore .
    cp ~/.config/pro/src/* ./src/
@@ -87,7 +87,7 @@ function code()   {
    cd  ~/code/  
    return
    fi
-   cd ~/code/$1 &> /dev/null || pro ~/code/$1 && cd  ~/code/$1
+   pro ~/code/"$1 {ALPHA}"
 }
 
 function codec()   {
@@ -97,20 +97,12 @@ function codec()   {
    cd  ~/codec/  
    return
    fi
-   cd ~/codec/$1 &> /dev/null || pro ~/codec/$1 && cd  ~/codec/$1
+   pro ~/codec/"$1 {ALPHA}"
 }
 
-function codew()   {
-   if [[ $# = 0 ]] ; then
-   cd ~/codew/ &> /dev/null || 
-   mkdir ~/codew/ && 
-   cd  ~/codew/  
-   return
-   fi
-   cd ~/codew/$1 &> /dev/null || mkdir ~/codew/$1 && cd  ~/codew/$1
+function mkalarm(){
+    echo "mpv --no-video ~/Alarm/alarm.mp3 & notify-send -a \"Alarm\" -n ~/Alarm/alarm.png \".$2\" & zsh -c \"$3\" " | at -t $1
 }
-
-
 
 function mkasm(){
    clang $@ -S

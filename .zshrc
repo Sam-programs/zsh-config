@@ -6,7 +6,7 @@ HISTFILE=$HOME/.config/zsh/.zshhistory
 HISTSIZE=20000
 SAVEHIST=20000
 autoload -U colors && colors
-
+setopt zle
 fg_black="%{$fg[black]%}"
 fg_red="%{$fg[red]%}"
 fg_blue="%{$fg[blue]%}"
@@ -20,8 +20,10 @@ bg_blue="%{$bg[blue]%}"
 bg_green="%{$bg[green]%}"
 bg_yellow="%{$bg[yellow]%}"
 bg_cyan="%{$bg[cyan]%}"
-
 Preset_color="%{$reset_color%}"
+
+alias rgbon='~/Downloads/OpenRGB_1.0rc2_x86_64_0fca93e.AppImage --noautoconnect -m Breathing -s 30'
+alias rgboff='~/Downloads/OpenRGB_1.0rc2_x86_64_0fca93e.AppImage --noautoconnect -m off -s 30'
 
 function update_prompt(){
   local gitbranch="$(git branch --show-current 2> /dev/null)"
@@ -63,16 +65,12 @@ TIMEFMT="$fg[blue]================
 CPU	%P
 user	%*U
 system	%*S
-total	%*E"$reset_color
+total	%*E$reset_color"
 
 function command_not_found_handler(){
-   echo "$bg[red]$fg[black] \"$1\" command not found $reset_color$fg[red]$reset_color"
-}
-
-function zshaddhistory() { 
+    echo "$bg[red]$fg[black] \"$1\" command not found $reset_color$fg[red]$reset_color"
    whence ${${(z)1}[1]} >| /dev/null || return 1 
 }
-
 export ZSH_AUTOSUGGEST_STRATEGY=(
     history
     completion
@@ -100,37 +98,26 @@ function c(){
    /usr/bin/clear
 }
 
-local old_accept_line=${widgets[accept-line]#*:}
-[[ $old_accept_line = 'builtin' ]] && 
-   old_accept_line='zle accept-line'
-
 function clear_accept_line(){
-   [[ $BUFFER =~ '^clear$' || $BUFFER =~ '^c$'  ]] && 
+   if [[ $BUFFER =~ '^clear$' || $BUFFER =~ '^c$'  ]] then  
       zle .clear-screen && 
       BUFFER= &&
       return
-   eval $old_accept_line
+   fi
+   zle .$WIDGET
 }
 
 zle -N accept-line clear_accept_line
 
-function cmake-build-run(){
-   echo "\033[32mcmake .\033[0m"
-   /usr/bin/cmake . && 
-   time make
-   [[ -f Game ]] && ./Game
-   zle .accept-line
-}
-zle -N cmake-build-run
-
 bindkey '^E' cmake-build-run
-eval "$(zoxide init zsh)"
 #figlet -w $(stty size | cut -d\  -f2) H i , Welcome to the Shell
 alias godot="~/.local/bin/godot"
 
 function mp4(){
     ffmpeg -i $1.mkv $1.mp4
 }
-[[ $((RANDOM % 10)) == 0 ]] && ~/.fehbg 
-return 0
 
+export CMAKE_GENERATOR=Ninja
+
+eval "$(zoxide init --cmd cd zsh)"
+return 0
